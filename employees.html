@@ -1,0 +1,343 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DayFlow - Employees</title>
+    
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Font Awesome for Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- Custom Styles -->
+    <link rel="stylesheet" href="css/style.css">
+    <style>
+        .employees-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+
+        .employees-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 2rem;
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+
+        .header-title h1 {
+            font-size: 2rem;
+            color: var(--primary-color);
+            margin-bottom: 0.5rem;
+        }
+
+        .header-title p {
+            color: #aaa;
+        }
+
+        .search-bar {
+            display: flex;
+            gap: 0.5rem;
+            flex: 1;
+            max-width: 400px;
+        }
+
+        .search-bar input {
+            flex: 1;
+            background: #2a2a2a;
+            border: 2px solid #444;
+            border-radius: 6px;
+            padding: 0.75rem;
+            color: var(--light-text);
+        }
+
+        .search-bar input::placeholder {
+            color: #666;
+        }
+
+        .search-bar input:focus {
+            outline: none;
+            border-color: var(--primary-color);
+        }
+
+        .action-buttons {
+            display: flex;
+            gap: 1rem;
+            align-items: center;
+        }
+
+        .btn-primary {
+            background: var(--primary-color);
+            color: white;
+            border: none;
+            padding: 0.75rem 1.5rem;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: 500;
+            transition: background 0.3s;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .btn-primary:hover {
+            background: #d97050;
+        }
+
+        .tabs {
+            display: flex;
+            gap: 2rem;
+            border-bottom: 2px solid #444;
+            margin-bottom: 2rem;
+        }
+
+        .tab-item {
+            padding: 1rem 0;
+            cursor: pointer;
+            color: #aaa;
+            border-bottom: 3px solid transparent;
+            transition: all 0.3s;
+            font-weight: 500;
+        }
+
+        .tab-item.active {
+            color: var(--primary-color);
+            border-bottom-color: var(--primary-color);
+        }
+
+        .employees-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 2rem;
+        }
+
+        .employee-card {
+            background: #2a2a2a;
+            border: 2px solid #444;
+            border-radius: 12px;
+            overflow: hidden;
+            transition: all 0.3s ease;
+            cursor: pointer;
+            position: relative;
+        }
+
+        .employee-card:hover {
+            border-color: var(--primary-color);
+            box-shadow: 0 4px 20px rgba(233, 127, 98, 0.15);
+            transform: translateY(-4px);
+        }
+
+        .employee-card-header {
+            position: relative;
+            height: 120px;
+            background: linear-gradient(135deg, #333 0%, #2a2a2a 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .employee-avatar {
+            width: 80px;
+            height: 80px;
+            background: var(--primary-color);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2rem;
+            color: white;
+            font-weight: bold;
+            border: 3px solid #1a1a1a;
+        }
+
+        .status-indicator {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            border: 3px solid #2a2a2a;
+        }
+
+        .status-present {
+            background: #4ade80;
+        }
+
+        .status-absent {
+            background: #fbbf24;
+        }
+
+        .status-leave {
+            background: #60a5fa;
+        }
+
+        .employee-card-body {
+            padding: 1.5rem;
+        }
+
+        .employee-name {
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: var(--light-text);
+            margin-bottom: 0.5rem;
+        }
+
+        .employee-position {
+            color: var(--primary-color);
+            font-size: 0.85rem;
+            margin-bottom: 1rem;
+            font-weight: 500;
+        }
+
+        .employee-info {
+            font-size: 0.85rem;
+            color: #aaa;
+            line-height: 1.6;
+            margin-bottom: 1rem;
+        }
+
+        .employee-info-item {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .employee-info-item i {
+            color: var(--primary-color);
+            width: 16px;
+        }
+
+        .employee-actions {
+            display: flex;
+            gap: 0.5rem;
+            padding-top: 1rem;
+            border-top: 1px solid #444;
+        }
+
+        .action-btn {
+            flex: 1;
+            padding: 0.6rem;
+            border: none;
+            background: #333;
+            color: var(--light-text);
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 0.85rem;
+            transition: all 0.3s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.4rem;
+        }
+
+        .action-btn:hover {
+            background: var(--primary-color);
+            color: white;
+        }
+
+        .empty-state {
+            text-align: center;
+            padding: 3rem;
+            color: #aaa;
+        }
+
+        .empty-state i {
+            font-size: 3rem;
+            color: var(--primary-color);
+            margin-bottom: 1rem;
+            opacity: 0.5;
+        }
+
+        .settings-btn {
+            background: none;
+            border: none;
+            color: var(--primary-color);
+            cursor: pointer;
+            font-size: 1.2rem;
+            padding: 0.5rem;
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation Bar -->
+    <nav class="navbar">
+        <div class="nav-logo">
+            <i class="fas fa-briefcase"></i> DayFlow
+        </div>
+        <ul class="nav-links">
+            <li><a href="employees.html" style="color: var(--primary-color);">Employees</a></li>
+            <li><a href="hr_salary_dashboard.html">Salary</a></li>
+            <li><a href="signup.html">Add Employee</a></li>
+        </ul>
+        <div class="nav-profile">
+            <div class="profile-badge" id="profileBadge" title="Profile">A</div>
+            <div class="message-badge" title="Messages">
+                <i class="fas fa-envelope" style="color: white;"></i>
+            </div>
+            <button onclick="logout()" style="background: none; border: none; color: var(--primary-color); cursor: pointer; font-size: 1.2rem; margin-left: 1rem;" title="Logout">
+                <i class="fas fa-sign-out-alt"></i>
+            </button>
+        </div>
+    </nav>
+
+    <!-- Main Employees Container -->
+    <div class="employees-container">
+        <!-- Header Section -->
+        <div class="employees-header">
+            <div class="header-title">
+                <h1>Employees</h1>
+                <p id="employeeCount">Loading employee list...</p>
+            </div>
+            <div class="search-bar">
+                <input type="text" id="searchInput" placeholder="Search employees...">
+                <button class="btn-primary" style="flex-shrink: 0;">
+                    <i class="fas fa-search"></i>
+                </button>
+            </div>
+            <div class="action-buttons">
+                <a href="signup.html" class="btn-primary">
+                    <i class="fas fa-user-plus"></i>
+                    Add Employee
+                </a>
+                <button class="settings-btn" title="Settings">
+                    <i class="fas fa-cog"></i>
+                </button>
+            </div>
+        </div>
+
+        <!-- Tabs -->
+        <div class="tabs">
+            <div class="tab-item active" onclick="switchTab('all')">
+                <i class="fas fa-users"></i> All Employees
+            </div>
+            <div class="tab-item" onclick="switchTab('attendance')">
+                <i class="fas fa-calendar-check"></i> Attendance
+            </div>
+            <div class="tab-item" onclick="switchTab('settings')">
+                <i class="fas fa-sliders-h"></i> Settings
+            </div>
+        </div>
+
+        <!-- Employees Grid -->
+        <div id="employeesGrid" class="employees-grid">
+            <!-- Employees will be loaded here by JavaScript -->
+        </div>
+
+        <!-- Empty State -->
+        <div id="emptyState" class="empty-state" style="display: none;">
+            <i class="fas fa-users"></i>
+            <h3 style="color: var(--light-text); margin-top: 1rem;">No employees found</h3>
+            <p style="margin-top: 0.5rem;">Create a new employee to get started</p>
+        </div>
+    </div>
+
+    <!-- Scripts -->
+    <script src="js/employees.js"></script>
+</body>
+</html>

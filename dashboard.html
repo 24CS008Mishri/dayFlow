@@ -1,0 +1,301 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DayFlow - Dashboard</title>
+    
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Font Awesome for Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- Custom Styles -->
+    <link rel="stylesheet" href="css/style.css">
+    <style>
+        .dashboard-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+
+        .dashboard-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+
+        .dashboard-card {
+            background: #2a2a2a;
+            border: 2px solid #444;
+            border-radius: 12px;
+            padding: 2rem;
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        .dashboard-card:hover {
+            border-color: var(--primary-color);
+            box-shadow: 0 4px 20px rgba(233, 127, 98, 0.15);
+            transform: translateY(-4px);
+        }
+
+        .card-icon {
+            font-size: 3rem;
+            color: var(--primary-color);
+            margin-bottom: 1rem;
+        }
+
+        .card-title {
+            font-size: 1.5rem;
+            font-weight: 600;
+            color: var(--light-text);
+            margin-bottom: 0.5rem;
+        }
+
+        .card-description {
+            color: #aaa;
+            margin-bottom: 1.5rem;
+            font-size: 0.95rem;
+        }
+
+        .card-button {
+            background: var(--primary-color);
+            color: white;
+            border: none;
+            padding: 0.75rem 1.5rem;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: 500;
+            transition: background 0.3s;
+            text-decoration: none;
+            display: inline-block;
+            width: 100%;
+            text-align: center;
+        }
+
+        .card-button:hover {
+            background: #d97050;
+        }
+
+        .welcome-section {
+            background: linear-gradient(135deg, #2a2a2a 0%, #1a1a1a 100%);
+            border: 2px solid var(--primary-color);
+            border-radius: 12px;
+            padding: 2rem;
+            margin-bottom: 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .welcome-text h1 {
+            font-size: 2rem;
+            color: var(--primary-color);
+            margin-bottom: 0.5rem;
+        }
+
+        .welcome-text p {
+            color: #aaa;
+            font-size: 1rem;
+        }
+
+        .user-info {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .user-avatar {
+            width: 60px;
+            height: 60px;
+            background: var(--primary-color);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            color: white;
+            font-weight: bold;
+        }
+
+        .admin-section {
+            display: none;
+        }
+
+        .admin-section.show {
+            display: block;
+        }
+
+        .employee-section {
+            display: none;
+        }
+
+        .employee-section.show {
+            display: block;
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation Bar -->
+    <nav class="navbar">
+        <div class="nav-logo">
+            <i class="fas fa-briefcase"></i> DayFlow
+        </div>
+        <ul class="nav-links">
+            <li><a href="dashboard.html">Dashboard</a></li>
+            <li id="adminNavLink" style="display: none;"><a href="hr_salary_dashboard.html">Salary</a></li>
+            <li id="adminNavLink2" style="display: none;"><a href="signup.html">Add Employee</a></li>
+            <li id="employeeNavLink" style="display: none;"><a href="#attendance">Attendance</a></li>
+            <li id="employeeNavLink2" style="display: none;"><a href="#timeoff">Time Off</a></li>
+        </ul>
+        <div class="nav-profile">
+            <div class="profile-badge" id="profileBadge" title="Profile">U</div>
+            <div class="message-badge" title="Messages">
+                <i class="fas fa-envelope" style="color: white;"></i>
+            </div>
+            <button onclick="logout()" style="background: none; border: none; color: var(--primary-color); cursor: pointer; font-size: 1.2rem; margin-left: 1rem;" title="Logout">
+                <i class="fas fa-sign-out-alt"></i>
+            </button>
+        </div>
+    </nav>
+
+    <!-- Main Dashboard Container -->
+    <div class="dashboard-container">
+        <!-- Welcome Section -->
+        <div class="welcome-section">
+            <div class="welcome-text">
+                <h1>Welcome to DayFlow!</h1>
+                <p id="welcomeMessage">Dashboard loading...</p>
+            </div>
+            <div class="user-info">
+                <div>
+                    <div style="text-align: right;">
+                        <div id="userName" style="font-size: 1.2rem; font-weight: 600; color: var(--light-text);">User</div>
+                        <div id="userEmail" style="color: #aaa; font-size: 0.9rem;">user@example.com</div>
+                    </div>
+                </div>
+                <div class="user-avatar" id="userAvatarDisplay">U</div>
+            </div>
+        </div>
+
+        <!-- Admin Section -->
+        <div class="admin-section" id="adminSection">
+            <h2 style="font-size: 1.5rem; color: var(--light-text); margin-bottom: 1rem;">Admin Dashboard</h2>
+            <div class="dashboard-grid">
+                <!-- View All Employees -->
+                <div class="dashboard-card">
+                    <div class="card-icon">
+                        <i class="fas fa-users"></i>
+                    </div>
+                    <div class="card-title">View Employees</div>
+                    <div class="card-description">Manage and view all employee information in the system</div>
+                    <a href="admin_profile.html" class="card-button">View Employees</a>
+                </div>
+
+                <!-- Salary Management -->
+                <div class="dashboard-card">
+                    <div class="card-icon">
+                        <i class="fas fa-dollar-sign"></i>
+                    </div>
+                    <div class="card-title">Salary Management</div>
+                    <div class="card-description">Configure and manage employee salary structures</div>
+                    <a href="hr_salary_dashboard.html" class="card-button">Manage Salary</a>
+                </div>
+
+                <!-- Add New Employee -->
+                <div class="dashboard-card">
+                    <div class="card-icon">
+                        <i class="fas fa-user-plus"></i>
+                    </div>
+                    <div class="card-title">Add Employee</div>
+                    <div class="card-description">Register a new employee in the system</div>
+                    <a href="signup.html" class="card-button">Add Employee</a>
+                </div>
+
+                <!-- Admin Profile -->
+                <div class="dashboard-card">
+                    <div class="card-icon">
+                        <i class="fas fa-user-tie"></i>
+                    </div>
+                    <div class="card-title">My Profile</div>
+                    <div class="card-description">View and update your admin profile information</div>
+                    <a href="admin_profile.html#profile-section" class="card-button">View Profile</a>
+                </div>
+            </div>
+        </div>
+
+        <!-- Employee Section -->
+        <div class="employee-section" id="employeeSection">
+            <h2 style="font-size: 1.5rem; color: var(--light-text); margin-bottom: 1rem;">Employee Dashboard</h2>
+            <div class="dashboard-grid">
+                <!-- My Profile -->
+                <div class="dashboard-card">
+                    <div class="card-icon">
+                        <i class="fas fa-user"></i>
+                    </div>
+                    <div class="card-title">My Profile</div>
+                    <div class="card-description">View and update your profile information</div>
+                    <a href="employeeprofile.html" class="card-button">Go to Profile</a>
+                </div>
+
+                <!-- Attendance -->
+                <div class="dashboard-card">
+                    <div class="card-icon">
+                        <i class="fas fa-clipboard-list"></i>
+                    </div>
+                    <div class="card-title">Attendance</div>
+                    <div class="card-description">Check your attendance records and status</div>
+                    <a href="employeeprofile.html#attendance" class="card-button">View Attendance</a>
+                </div>
+
+                <!-- Leave Requests -->
+                <div class="dashboard-card">
+                    <div class="card-icon">
+                        <i class="fas fa-calendar-times"></i>
+                    </div>
+                    <div class="card-title">Leave Requests</div>
+                    <div class="card-description">Request and manage your time off</div>
+                    <a href="employeeprofile.html#timeoff" class="card-button">Manage Leaves</a>
+                </div>
+
+                <!-- Check In/Out -->
+                <div class="dashboard-card">
+                    <div class="card-icon">
+                        <i class="fas fa-clock"></i>
+                    </div>
+                    <div class="card-title">Check In/Out</div>
+                    <div class="card-description">Mark your daily attendance status</div>
+                    <button class="card-button" onclick="openCheckInModal()">Check Status</button>
+                </div>
+
+                <!-- Logout -->
+                <div class="dashboard-card">
+                    <div class="card-icon">
+                        <i class="fas fa-sign-out-alt"></i>
+                    </div>
+                    <div class="card-title">Logout</div>
+                    <div class="card-description">Sign out of your account</div>
+                    <button class="card-button" onclick="logout()" style="background: #d97050;">Logout</button>
+                </div>
+            </div>
+
+            <!-- Recent Activity Section -->
+            <div style="margin-top: 3rem;">
+                <h3 style="font-size: 1.3rem; color: var(--light-text); margin-bottom: 1rem;">Recent Activity</h3>
+                <div id="recentActivity" style="background: #2a2a2a; border: 2px solid #444; border-radius: 12px; padding: 2rem;">
+                    <div style="color: #aaa; text-align: center;">
+                        <i class="fas fa-info-circle"></i>
+                        <p>No recent activity</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Scripts -->
+    <script src="js/dashboard.js"></script>
+</body>
+</html>
