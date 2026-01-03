@@ -2,7 +2,25 @@
 CREATE DATABASE IF NOT EXISTS dayflow;
 USE dayflow;
 
+<<<<<<< HEAD
 -- Employees Table (create first before users)
+=======
+-- Users Table (for authentication)
+CREATE TABLE IF NOT EXISTS users (
+    id INT PRIMARY KEY AUTO_INCREMENT,
+    login_id VARCHAR(50) UNIQUE NOT NULL,
+    email VARCHAR(100) UNIQUE NOT NULL,
+    password_hash VARCHAR(255) NOT NULL,
+    role ENUM('employee', 'hr', 'admin') DEFAULT 'employee',
+    first_login BOOLEAN DEFAULT TRUE,
+    employee_id INT,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    FOREIGN KEY (employee_id) REFERENCES employees(id) ON DELETE SET NULL
+);
+
+-- Employees Table
+>>>>>>> ea79794f4f442ffbcda7d39c1eadb07a0fc9c046
 CREATE TABLE IF NOT EXISTS employees (
     id INT PRIMARY KEY AUTO_INCREMENT,
     name VARCHAR(100) NOT NULL,
@@ -25,6 +43,7 @@ CREATE TABLE IF NOT EXISTS employees (
     updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
 );
 
+<<<<<<< HEAD
 -- Users Table (for authentication)
 CREATE TABLE IF NOT EXISTS users (
     id INT PRIMARY KEY AUTO_INCREMENT,
@@ -39,6 +58,8 @@ CREATE TABLE IF NOT EXISTS users (
     FOREIGN KEY (employee_id) REFERENCES employees(id) ON DELETE SET NULL
 );
 
+=======
+>>>>>>> ea79794f4f442ffbcda7d39c1eadb07a0fc9c046
 -- Salary Info Table
 CREATE TABLE IF NOT EXISTS salary_info (
     id INT PRIMARY KEY AUTO_INCREMENT,
@@ -66,6 +87,7 @@ CREATE TABLE IF NOT EXISTS security_info (
     FOREIGN KEY (employee_id) REFERENCES employees(id) ON DELETE CASCADE
 );
 
+<<<<<<< HEAD
 -- Attendance Table
 CREATE TABLE IF NOT EXISTS attendance (
     id INT PRIMARY KEY AUTO_INCREMENT,
@@ -108,6 +130,8 @@ CREATE TABLE IF NOT EXISTS activity_log (
     FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE
 );
 
+=======
+>>>>>>> ea79794f4f442ffbcda7d39c1eadb07a0fc9c046
 -- Insert Sample Employee Data
 INSERT INTO employees (name, job_position, email, mobile, company, department, manager, date_of_birth, residing_address, nationality, personal_email, gender, marital_status, date_of_joining) 
 VALUES (

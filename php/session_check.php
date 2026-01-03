@@ -4,6 +4,7 @@ header('Content-Type: application/json');
 
 session_start();
 
+<<<<<<< HEAD
 // Handle logout action
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && $_POST['action'] === 'logout') {
     session_destroy();
@@ -11,6 +12,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && $_POST['
     exit;
 }
 
+=======
+>>>>>>> ea79794f4f442ffbcda7d39c1eadb07a0fc9c046
 if (isset($_SESSION['user_id']) && isset($_SESSION['role'])) {
     echo json_encode([
         'loggedIn' => true,

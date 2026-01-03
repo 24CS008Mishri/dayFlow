@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 // Check if user is Admin or HR on page load
 window.addEventListener('DOMContentLoaded', function() {
     const userRole = localStorage.getItem('userRole');
@@ -15,6 +16,17 @@ window.addEventListener('DOMContentLoaded', function() {
     if (headerRole) {
         headerRole.textContent = roleDisplay;
     }
+=======
+// Check if user is HR on page load
+window.addEventListener('DOMContentLoaded', function() {
+    const userRole = localStorage.getItem('userRole');
+    
+    // Redirect to login if not HR
+    if (!userRole || userRole !== 'hr') {
+        alert('You do not have permission to access this page. Only HR can add new employees.');
+        window.location.href = 'index.html';
+    }
+>>>>>>> ea79794f4f442ffbcda7d39c1eadb07a0fc9c046
 });
 
 /**
@@ -138,9 +150,15 @@ function handleSignup(event) {
                 document.getElementById('signupForm').reset();
                 document.getElementById('generatedLoginId').textContent = 'OI________';
                 
+<<<<<<< HEAD
                 // Redirect to employees list after 2 seconds
                 setTimeout(() => {
                     window.location.href = 'employees.html';
+=======
+                // Redirect to index after 2 seconds
+                setTimeout(() => {
+                    window.location.href = 'admin_profile.html';
+>>>>>>> ea79794f4f442ffbcda7d39c1eadb07a0fc9c046
                 }, 2000);
             } else {
                 showError(data.message || 'Failed to add employee');
@@ -196,6 +214,7 @@ function showSuccess(message) {
  */
 function logout() {
     if (confirm('Are you sure you want to logout?')) {
+<<<<<<< HEAD
         // Clear localStorage
         localStorage.removeItem('userId');
         localStorage.removeItem('userName');
@@ -215,5 +234,12 @@ function logout() {
         }).catch(() => {
             window.location.href = 'index.html';
         });
+=======
+        localStorage.removeItem('userRole');
+        localStorage.removeItem('userId');
+        localStorage.removeItem('userName');
+        localStorage.removeItem('userEmail');
+        window.location.href = 'login.html';
+>>>>>>> ea79794f4f442ffbcda7d39c1eadb07a0fc9c046
     }
 }

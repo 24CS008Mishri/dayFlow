@@ -38,12 +38,17 @@ function handleLogin(event) {
             localStorage.setItem('userName', data.userName);
             localStorage.setItem('userEmail', data.userEmail);
             localStorage.setItem('userRole', data.userRole);
+<<<<<<< HEAD
             // Redirect based on role
             if (data.userRole === 'admin' || data.userRole === 'hr') {
                 window.location.href = 'employees.html';
             } else {
                 window.location.href = 'dashboard.html';
             }
+=======
+            // Redirect to dashboard or profile page
+            window.location.href = 'employeeprofile.html';
+>>>>>>> ea79794f4f442ffbcda7d39c1eadb07a0fc9c046
         } else {
             showError(data.message || 'Invalid Login ID/Email or Password');
             submitBtn.disabled = false;

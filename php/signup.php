@@ -1,4 +1,5 @@
 <?php
+<<<<<<< HEAD
 // signup.php - Admin or HR creates new employee account
 header('Content-Type: application/json');
 
@@ -19,6 +20,13 @@ if ($_SESSION['role'] !== 'admin' && $_SESSION['role'] !== 'hr') {
     exit;
 }
 
+=======
+// signup.php - HR creates new employee account
+header('Content-Type: application/json');
+
+include 'config.php';
+
+>>>>>>> ea79794f4f442ffbcda7d39c1eadb07a0fc9c046
 // Check if request is POST
 if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
     http_response_code(400);

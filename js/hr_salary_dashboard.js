@@ -287,6 +287,7 @@ function logout() {
         localStorage.removeItem("userId");
         localStorage.removeItem("userName");
         localStorage.removeItem("userEmail");
+<<<<<<< HEAD
         localStorage.removeItem("rememberedLoginId");
         
         // Clear session via PHP
@@ -301,5 +302,8 @@ function logout() {
         }).catch(() => {
             window.location.href = "index.html";
         });
+=======
+        window.location.href = "login.html";
+>>>>>>> ea79794f4f442ffbcda7d39c1eadb07a0fc9c046
     }
 }
